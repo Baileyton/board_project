@@ -3,6 +3,7 @@ package com.example.board.service;
 import com.example.board.entity.Member;
 import com.example.board.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,6 +15,12 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
+    public Optional<Member> findById(Long id) {
+        return memberRepository.findById(id);
+    }
 
     public boolean isDuplicate(String nick) {
         Optional<Member> findByNick = Optional.ofNullable(memberRepository.findByNick(nick));
@@ -34,4 +41,15 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    public Member login(String nick, String password) {
+        Member member = memberRepository.findByNick((nick));
+        if(member == null){
+            throw new IllegalArgumentException("존재하지 않는 회원입니다.");
+        }
+        if(!passwordEncoder.matches(password, member.getPassword())){
+            throw new IllegalArgumentException("비밀번호를 다시 입력해주세요");
+        }
+
+        return member;
+    }
 }

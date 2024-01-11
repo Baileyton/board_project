@@ -2,9 +2,9 @@
 <html lang="" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-    <title>회원가입</title>
+    <title>로그인</title>
     <style>
-        .joinContainer{
+        .loginContainer{
             width: 600px;
             text-align: center;
             display: block;
@@ -54,19 +54,16 @@
     </style>
 </head>
 <body>
-<div class="joinContainer">
-    <h1 class="title">회원가입</h1>
-    <form role="form" action="/join" method="POST" th:object="${memberDto}">
+<div class="loginContainer">
+    <h1 class="title">로그인</h1>
+    <form role="form" action="/login" method="POST" th:object="${memberDto}">
         <label th:for="nick"></label>
         <input type="text" name="nick" placeholder="닉네임을 입력하세요">
         <p th:if="${#fields.hasErrors('nick')}" th:errors="*{nick}"></p>
         <label th:for="password"></label>
         <input type="password" name="password" placeholder="비밀번호를 입력하세요">
         <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-        <label th:for="passwordCheck"></label>
-        <input type="password" name="passwordCheck" placeholder="비밀번호를 재입력해주세요">
-        <p th:errors="*{passwordCheck}"></p>
-        <input type="submit" id="submitJoin" value="가입하기">
+        <input type="submit" id="submitJoin" value="로그인">
     </form>
 </div>
 </body>

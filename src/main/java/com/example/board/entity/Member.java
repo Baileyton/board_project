@@ -1,6 +1,6 @@
 package com.example.board.entity;
 
-import com.example.board.dto.MemberDto;
+import com.example.board.dto.JoinFormDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,7 +21,7 @@ public class Member {
 
     private String password;
 
-    public static Member join(MemberDto memberDto, String encodedPassword){
+    public static Member join(JoinFormDto memberDto, String encodedPassword){
         Member member = new Member();
         member.setNick(memberDto.getNick());
         member.setPassword(encodedPassword);
