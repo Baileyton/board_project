@@ -7,7 +7,6 @@ import com.example.board.service.MemberService;
 import com.example.board.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +29,8 @@ public class MemberController {
 
     //회원가입 화면
     @GetMapping(value = "/join")
-    public String joinForm(JoinFormDto joinFormDto, Model model){
-        model.addAttribute("memberDto", new JoinFormDto());
+    public String joinForm(Model model){
+        model.addAttribute("joinFormDto", new JoinFormDto());
         return "member/joinForm";
     }
 
@@ -67,8 +66,8 @@ public class MemberController {
 
     //로그인 화면
     @GetMapping(value = "/login")
-    public String loginForm(LoginFormDto loginFormDto, Model model){
-        model.addAttribute("memberDto", new JoinFormDto());
+    public String loginForm(Model model){
+        model.addAttribute("loginFormDto", new LoginFormDto());
         return "member/loginForm";
     }
 
@@ -100,4 +99,12 @@ public class MemberController {
         }
     }
 
+    @PostMapping(value = "/logout")
+    public String logout(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if(session != null) {
+            session.invalidate();
+        }
+        return "redirect:/";
+    }
 }
