@@ -56,7 +56,7 @@
 <body>
 <div class="joinContainer">
     <h1 class="title">회원가입</h1>
-    <form role="form" action="/join" method="POST" th:object="${memberDto}">
+    <form role="form" action="/join" method="POST" th:object="${joinFormDto}">
         <label th:for="nick"></label>
         <input type="text" name="nick" placeholder="닉네임을 입력하세요">
         <p th:if="${#fields.hasErrors('nick')}" th:errors="*{nick}"></p>

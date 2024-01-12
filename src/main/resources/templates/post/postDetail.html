@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+<div>
+    <!-- 제목 -->
+    <div>
+        <h2>게시글 상세</h2>
+    </div>
+
+    <!-- 목록으로 -->
+    <div class="col text-end">
+        <button th:if="${access}"
+                type="button">수정</button>
+        <button th:if="${access}"
+                type="button">삭제</button>
+    </div>
+
+    <hr>
+    <!-- 게시글 정보 한줄 -->
+    <div>
+        <span>번호 : postId</span>&nbsp;
+        <span> | 작성자 : writer</span>&nbsp;
+        <span> | 최종 수정일 : 2024-01-11</span>&nbsp;
+        <span> | 조회수 : 0</span>
+    </div>
+
+    <hr>
+
+    <!-- 글 내용 -->
+    <div>
+        <div>
+            <div>
+                <div>
+                    <div>
+                        <h3>작성글 제목</h3>
+                        <hr>
+                        <p>작성글 내용이 이곳에 표시됩니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /container -->
+<br>
+<!-- 댓글 컨테이너 -->
+<div>
+    <!-- 댓글 작성 폼 -->
+    <form method="post">
+        <div>
+            <textarea type="text" id="text"
+                      placeholder="댓글 작성" >
+            </textarea>
+            <button>작성</button>
+        </div>
+    </form>
+
+    <!-- 댓글 리스트 -->
+    <div>
+        <div>
+            <div>
+                <p>작성자</p>
+                <p>댓글 내용이 이곳에 표시됩니다.</p>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>
+
+</body>
+</html>

@@ -12,18 +12,11 @@
 </head>
 <body>
 <div>
-    <a href="board.html"  th:href="@{/}">
-        <h1>Board Project</h1>
-    </a>
-</div>
-<br>
-
-<div>
     <!-- 로그인, 회원 정보 관련  -->
     <div class="py-1 row">
         <!-- 로그인 시  -->
         <div th:if="${show}" style="display: flex; text-align: end">
-            <a th:href="@{/member/info}" th:text="${member.nick + ' 님 반갑습니다.'}">(회원아이디)</a>
+            <a th:text="${member.nick + ' 님 반갑습니다.'}">(회원아이디)</a>
             <span>님 반갑습니다.</span>
             <button>회원 프로필</button>
 
@@ -69,7 +62,9 @@
 
         <!--글쓰기 버튼 -->
         <div>
-            <button type="button">글쓰기</button>
+            <button onclick="location.href='writeForm.html'"
+                    th:onclick="|location.href='@{/write}'|"
+                    type="button">글쓰기</button>
         </div>
     </div>
     <hr>
