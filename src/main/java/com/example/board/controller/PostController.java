@@ -2,27 +2,29 @@ package com.example.board.controller;
 
 import com.example.board.dto.PostHtmlDto;
 import com.example.board.dto.WriteFormDto;
+import com.example.board.entity.Comment;
 import com.example.board.entity.Member;
 import com.example.board.entity.Post;
+import com.example.board.service.CommentService;
 import com.example.board.service.PostService;
 import com.example.board.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class PostController {
 
     private final PostService postService;
+
+    private final CommentService commentService;
 
     @GetMapping(value = "/write")
     public String writePage(Model model) {
@@ -54,9 +56,23 @@ public class PostController {
             postService.addView(postId); // 조회수
         }
 
+        List<Comment> comments = commentService.findByPostId(postId);
+        model.addAttribute("comments", comments);
         PostHtmlDto postHtmlDto = postService.getHtmlPostDto(post);
         model.addAttribute("post", postHtmlDto);
 
+        model.addAttribute("commentForm", new Comment());
+
         return "post/postDetail";
+    }
+
+    @PostMapping(value = "/post/{postId}")
+    public String writeComment(@PathVariable long postId, @ModelAttribute("commentForm")Comment comment, @Valid BindingResult bindingResult,
+                               @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember) {
+        if(bindingResult.hasErrors()) {
+            return "redirect:/post/{postId}";
+        }
+        commentService.save(comment, loginMember.getNick(), postId);
+        return "redirect:/post/{postId}";
     }
 }

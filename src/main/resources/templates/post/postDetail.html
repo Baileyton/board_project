@@ -40,23 +40,20 @@
 <!-- 댓글 컨테이너 -->
 <div>
     <!-- 댓글 작성 폼 -->
-    <form method="post">
+    <form th:accept th:object="${commentForm}" method="post">
         <div>
             <textarea type="text" id="text"
+                      th:field="*{comment}"
                       placeholder="댓글 작성" >
             </textarea>
-            <button>작성</button>
+            <button type="submit">작성</button>
         </div>
     </form>
 
     <!-- 댓글 리스트 -->
-    <div>
-        <div>
-            <div>
-                <p>작성자</p>
-                <p>댓글 내용이 이곳에 표시됩니다.</p>
-            </div>
-        </div>
+    <div th:each="comment : ${comments}">
+        <p th:text="|${comment.nick}   (${#temporals.format(comment.modifiedDate, 'yyyy-MM-dd HH:mm')})|">작성자</p>
+        <p th:text="${comment.comment}">댓글 내용이 이곳에 표시됩니다.</p>
     </div>
     <hr>
 </div>

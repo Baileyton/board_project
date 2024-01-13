@@ -17,3 +17,5 @@ Java 11, Spring Boot 2.7.16, Spring Data JPA, Thymeleaf, HTML5, CSS3, MariaDB, I
 - 로그인 사용자 확인 후 작성글 수정, 삭제
 - 조회수 기능: 작성자가 조회시 조회수 증가 안될 것
 
+### 댓글 Comment
+- 댓글 작성
