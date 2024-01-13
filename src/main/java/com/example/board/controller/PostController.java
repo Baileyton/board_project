@@ -1,5 +1,6 @@
 package com.example.board.controller;
 
+import com.example.board.dto.PostHtmlDto;
 import com.example.board.dto.WriteFormDto;
 import com.example.board.entity.Member;
 import com.example.board.entity.Post;
@@ -49,7 +50,12 @@ public class PostController {
 
         if(postService.isAccessable(postId, loginMember)){
             model.addAttribute("access",true);
+        }else {
+            postService.addView(postId); // 조회수
         }
+
+        PostHtmlDto postHtmlDto = postService.getHtmlPostDto(post);
+        model.addAttribute("post", postHtmlDto);
 
         return "post/postDetail";
     }
