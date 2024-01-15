@@ -1,13 +1,14 @@
 package com.example.board.controller;
 
 import com.example.board.dto.PostHtmlDto;
-import com.example.board.dto.WriteFormDto;
+import com.example.board.dto.PostFormDto;
 import com.example.board.entity.Comment;
 import com.example.board.entity.Member;
 import com.example.board.entity.Post;
 import com.example.board.service.CommentService;
 import com.example.board.service.PostService;
 import com.example.board.session.SessionConst;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,17 +29,17 @@ public class PostController {
 
     @GetMapping(value = "/write")
     public String writePage(Model model) {
-        model.addAttribute("writeFormDto", new WriteFormDto());
+        model.addAttribute("postFormDto", new PostFormDto());
         return "post/writeForm";
     }
 
     @PostMapping(value = "/write")
-    public String write(@Valid WriteFormDto writeFormDto, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String write(@Valid PostFormDto postFormDto, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "post/writeForm";
         }
 
-        Post post = new Post(loginMember.getNick(), writeFormDto.getTitle(), writeFormDto.getContent());
+        Post post = new Post(loginMember.getNick(), postFormDto.getTitle(), postFormDto.getContent());
         Post savedPost = postService.save(post);
 
         redirectAttributes.addAttribute("postId",savedPost.getId());
@@ -73,6 +74,26 @@ public class PostController {
             return "redirect:/post/{postId}";
         }
         commentService.save(comment, loginMember.getNick(), postId);
+        return "redirect:/post/{postId}";
+    }
+
+    @GetMapping(value = "/post/{postId}/edit")
+    public String editForm(@PathVariable long postId, Model model) {
+        Post post = postService.findById(postId);
+
+        model.addAttribute("post", post);
+        model.addAttribute("postFormDto", postService.getEditForm(post));
+        return "/post/editForm";
+    }
+
+    @PostMapping(value = "/post/{postId}/edit")
+    public String edit(@PathVariable long postId, @Valid PostFormDto postFormDto, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("postFormDto", postFormDto);
+            return "/post/editForm";
+        }
+
+        postService.update(postId, postFormDto);
         return "redirect:/post/{postId}";
     }
 }

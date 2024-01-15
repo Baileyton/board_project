@@ -1,5 +1,6 @@
 package com.example.board.service;
 
+import com.example.board.dto.PostFormDto;
 import com.example.board.dto.PostHtmlDto;
 import com.example.board.entity.Member;
 import com.example.board.entity.Post;
@@ -51,5 +52,16 @@ public class PostService {
 
     public String getHtmlContent(String content) {
         return content.replaceAll("\n", "<br>");
+    }
+
+    public PostFormDto getEditForm(Post post) {
+        PostFormDto postFormDto = new PostFormDto();
+        postFormDto.setTitle(post.getTitle());
+        postFormDto.setContent(post.getContent());
+        return postFormDto;
+    }
+
+    public void update(Long postId, PostFormDto postFormDto) {
+        postRepository.update(postId, postFormDto.getTitle(), postFormDto.getContent());
     }
 }

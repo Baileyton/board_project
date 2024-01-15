@@ -12,12 +12,12 @@
 <body>
 <div>
     <div>
-        <h1>게시글 작성 하기</h1>
+        <h1>게시글 수정 하기</h1>
     </div>
 
     <hr>
 
-    <form action="/write" th:object="${postFormDto}" method="post">
+    <form th:action="@{/post/{postId}/edit(postId=${post.id})}" th:object="${postFormDto}" method="post">
         <!-- 제목, 내용 -->
         <div>
             <label for="title">제목</label>
