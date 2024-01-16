@@ -6,9 +6,9 @@ import com.example.board.entity.Comment;
 import com.example.board.entity.Member;
 import com.example.board.entity.Post;
 import com.example.board.service.CommentService;
+import com.example.board.service.MemberService;
 import com.example.board.service.PostService;
 import com.example.board.session.SessionConst;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +26,8 @@ public class PostController {
     private final PostService postService;
 
     private final CommentService commentService;
+
+    private final MemberService memberService;
 
     @GetMapping(value = "/write")
     public String writePage(Model model) {
@@ -96,4 +98,13 @@ public class PostController {
         postService.update(postId, postFormDto);
         return "redirect:/post/{postId}";
     }
+
+    @GetMapping(value = "/post/{postId}/delete")
+    public String delete(@PathVariable long postId){
+        commentService.deleteComment(postId); // 해당 게시글에 연결된 댓글들을 먼저 삭제
+        postService.deletePost(postId);// 후 게시글 삭제
+
+        return "redirect:/";
+    }
+
 }

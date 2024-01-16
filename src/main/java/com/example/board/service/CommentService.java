@@ -31,4 +31,8 @@ public class CommentService {
     public List<Comment> findByPostId(Long postId){
         return commentRepository.findByPostId(postId);
     }
+
+    public void deleteComment(Long postId){
+        commentRepository.deleteComment(postId);
+    }
 }

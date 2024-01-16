@@ -17,6 +17,7 @@
                 th:onclick="|location.href='@{/post/{postId}/edit(postId=${post.id})}'|"
                 type="button">수정</button>
         <button th:if="${access}"
+                th:onclick="|location.href='@{/post/{postId}/delete(postId=${post.id})}'|"
                 type="button">삭제</button>
     </div>
 
@@ -55,17 +56,6 @@
     <div th:each="comment : ${comments}">
         <p th:text="|${comment.nick}   (${#temporals.format(comment.modifiedDate, 'yyyy-MM-dd HH:mm')})|">작성자</p>
         <p th:text="${comment.comment}">댓글 내용이 이곳에 표시됩니다.</p>
-
-        <button>댓글 수정</button>
-        <button>댓글 삭제</button>
-
-        <form>
-            <div>
-                <textarea type="text" placeholder="댓글 수정"
-                th:value="${comment.comment}"></textarea>
-                <button type="submit">수정</button>
-            </div>
-        </form>
     </div>
     <hr>
 </div>

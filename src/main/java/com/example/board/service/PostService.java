@@ -32,6 +32,10 @@ public class PostService {
         postRepository.addView(postId);
     }
 
+    public void deletePost(Long postId){
+        postRepository.deletePost(postId);
+    }
+
     public boolean isAccessable(Long postId, Member loginMember){
         Post post = postRepository.findById(postId).get();
         return post.getWriter().equals(loginMember.getNick());
