@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <div>
+        <h1>회원 정보</h1>
+    </div>
+    <!-- 추가 -->
+    <h5>수정 완료</h5>
+
+    <div>
+        <label for="nick" >아이디</label>
+        <input type="text" id="nick" name="nick"
+               value="닉네임" th:value="${member.nick}" readonly>
+    </div>
+
+    <hr>
+
+    <div>
+        <div>
+            <button th:onclick="|location.href='@{/info/{loginId}/edit(loginId=${member.nick})}'|"
+                    type="button">정보 수정</button>
+        </div>
+        <div>
+            <button th:onclick="|location.href='@{/info/{loginId}/editpassword(loginId=${member.nick})}'|"
+                    type="button">비밀번호 변경</button>
+        </div>
+        <div>
+            <button th:onclick="|location.href='@{/info}'|"
+                    type="button">돌아가기</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
