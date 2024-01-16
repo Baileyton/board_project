@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -107,4 +108,11 @@ public class MemberController {
         }
         return "redirect:/";
     }
+
+    @GetMapping(value = "/info")
+    public String memberPageForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+        model.addAttribute("member", memberService.findById(loginMember.getId()).get());
+        return "member/memberPage";
+    }
+
 }

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <div>
+        <h2>회원 정보</h2>
+    </div>
+
+    <div>
+        <div>
+            <h5 th:text="|${member.nick}| + '님 환영합니다!'">환영합니다!&nbsp;</h5>
+        </div>
+        <div>
+            <button th:onclick="|location.href='@{/info/{nick}(nick=${member.nick})}'|"
+                    type="button">개인정보</button>
+
+            <form th:action="@{/logout}" method="post"
+                  onsubmit="return confirm('로그아웃 하시겠습니까?');">
+                <button type="submit">
+                    로그아웃
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+    <hr>
+
+    <div>
+        <div>
+            <button type="button">내가 작성한 게시글</button>
+        </div>
+        <div>
+            <button th:onclick="|location.href='@{/write}'|"
+                    type="button">글쓰기</button>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

@@ -85,18 +85,18 @@ public class PostController {
 
         model.addAttribute("post", post);
         model.addAttribute("postFormDto", postService.getEditForm(post));
-        return "/post/editForm";
+        return "post/editForm";
     }
 
     @PostMapping(value = "/post/{postId}/edit")
     public String edit(@PathVariable long postId, @Valid PostFormDto postFormDto, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
             model.addAttribute("postFormDto", postFormDto);
-            return "/post/editForm";
+            return "post/editForm";
         }
 
         postService.update(postId, postFormDto);
-        return "redirect:/post/{postId}";
+        return "redirect:post/{postId}";
     }
 
     @GetMapping(value = "/post/{postId}/delete")
@@ -106,5 +106,4 @@ public class PostController {
 
         return "redirect:/";
     }
-
 }

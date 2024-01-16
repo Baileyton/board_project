@@ -23,7 +23,8 @@
         <div class="userInfo" th:if="${show}">
             <a th:text="${member.nick + ' 님 반갑습니다.'}">(회원아이디)</a>
             <span>님 반갑습니다.</span>
-            <button>회원 프로필</button>
+            <button th:onclick="|location.href='@{/info}'|"
+                    type="button">회원 프로필</button>
 
             <form th:action="@{/logout}" method="post"
                   onsubmit="return confirm('로그아웃 하시겠습니까?');">
