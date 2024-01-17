@@ -1,5 +1,6 @@
 package com.example.board.service;
 
+import com.example.board.dto.EditFormDto;
 import com.example.board.entity.Member;
 import com.example.board.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -51,5 +52,9 @@ public class MemberService {
         }
 
         return member;
+    }
+
+    public EditFormDto editForm(Member loginMember) {
+        return new EditFormDto(loginMember.getNick());
     }
 }

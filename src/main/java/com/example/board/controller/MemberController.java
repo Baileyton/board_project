@@ -121,4 +121,13 @@ public class MemberController {
         model.addAttribute("member", memberService.findById(loginMember.getId()).get());
         return "member/memberInfo";
     }
+
+    @GetMapping(value = "/info/{nick}/edit")
+    public String memberEditForm(@PathVariable String nick,
+                                 @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                                 Model model) {
+        Member member = memberService.findById(loginMember.getId()).get();
+        model.addAttribute("editFormDto", memberService.editForm(member));
+        return "member/editForm";
+    }
 }

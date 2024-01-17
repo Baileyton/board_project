@@ -22,11 +22,11 @@
 
     <div>
         <div>
-            <button th:onclick="|location.href='@{/info/{loginId}/edit(loginId=${member.nick})}'|"
+            <button th:onclick="|location.href='@{/info/{nick}/edit(nick=${member.nick})}'|"
                     type="button">정보 수정</button>
         </div>
         <div>
-            <button th:onclick="|location.href='@{/info/{loginId}/editpassword(loginId=${member.nick})}'|"
+            <button th:onclick="|location.href='@{/info/{nick}/editpassword(nick=${member.nick})}'|"
                     type="button">비밀번호 변경</button>
         </div>
         <div>

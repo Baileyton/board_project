@@ -10,7 +10,7 @@ Java 11, Spring Boot 2.7.16, Spring Data JPA, Thymeleaf, HTML5, CSS3, MariaDB, I
 
 
 ### 회원 Member
-- 회원 CRUD 구현 (회원가입)
+- 회원 CRUD 구현 (회원가입, 회원정보)
 
 ### 게시글 Post
 - 게시글 CRUD 구현 (게시글 작성, 수정)

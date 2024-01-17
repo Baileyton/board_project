@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <style>
+        .field-error{
+            border-color: red;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div>
+        <h1>회원 정보 수정</h1>
+    </div>
+
+    <form th:action th:object="${editFormDto}" method="post">
+        <div>
+            <label for="nick">nick</label>
+            <input type="text" id="nick" th:field="*{nick}"
+                   th:errorclass="field-error" readonly>
+            <div class="field-error" th:errors="*{nick}" />
+        </div>
+
+        <hr>
+
+        <div>
+            <div>
+                <button type="submit"
+                >정보 수정</button>
+            </div>
+            <div>
+                <button th:onclick="|location.href='@{/info}'|"
+                        type="button">돌아가기</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
