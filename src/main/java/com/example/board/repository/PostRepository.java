@@ -11,9 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
-    Post save(Post post);
-
-    Optional<Post> findById(Long id);
 
     @Modifying
     @Transactional

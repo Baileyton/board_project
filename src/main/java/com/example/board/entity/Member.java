@@ -1,5 +1,6 @@
 package com.example.board.entity;
 
+import com.example.board.dto.EditFormDto;
 import com.example.board.dto.JoinFormDto;
 import lombok.*;
 
@@ -25,6 +26,12 @@ public class Member {
         Member member = new Member();
         member.setNick(memberDto.getNick());
         member.setPassword(encodedPassword);
+        return member;
+    }
+
+    public static Member edit(EditFormDto editFormDto){
+        Member member = new Member();
+        member.setNick(editFormDto.getNick());
         return member;
     }
 }

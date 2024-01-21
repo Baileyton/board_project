@@ -13,7 +13,7 @@
     <h5>수정 완료</h5>
 
     <div>
-        <label for="nick" >아이디</label>
+        <label for="nick" >닉네임</label>
         <input type="text" id="nick" name="nick"
                value="닉네임" th:value="${member.nick}" readonly>
     </div>
@@ -22,7 +22,7 @@
 
     <div>
         <div>
-            <button th:onclick="|location.href='@{/info/{nick}/edit(nick=${member.nick})}'|"
+            <button th:onclick="|location.href='@{/info/{memberId}/edit(memberId=${member.id})}'|"
                     type="button">정보 수정</button>
         </div>
         <div>

@@ -17,10 +17,9 @@
 
     <form th:action th:object="${editFormDto}" method="post">
         <div>
-            <label for="nick">nick</label>
-            <input type="text" id="nick" th:field="*{nick}"
-                   th:errorclass="field-error" readonly>
-            <div class="field-error" th:errors="*{nick}" />
+            <label for="nick">닉네임</label>
+            <input type="text" id="nick" th:field="*{nick}">
+            <div class="field-error" th:errors="*{nick}"></div>
         </div>
 
         <hr>

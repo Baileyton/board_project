@@ -1,5 +1,6 @@
 package com.example.board.controller;
 
+import com.example.board.dto.EditFormDto;
 import com.example.board.dto.JoinFormDto;
 import com.example.board.dto.LoginFormDto;
 import com.example.board.entity.Member;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -122,12 +124,15 @@ public class MemberController {
         return "member/memberInfo";
     }
 
-    @GetMapping(value = "/info/{nick}/edit")
-    public String memberEditForm(@PathVariable String nick,
-                                 @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
-                                 Model model) {
-        Member member = memberService.findById(loginMember.getId()).get();
-        model.addAttribute("editFormDto", memberService.editForm(member));
+    @GetMapping(value = "/info/{memberId}/edit")
+    public String memberEditForm(@PathVariable Long memberId, EditFormDto editFormDto, Model model) {
+        model.addAttribute("editFormDto", editFormDto);
         return "member/editForm";
+    }
+
+    @PostMapping(value = "/info/{memberId}/edit")
+    public String memberEdit(@PathVariable Long memberId, EditFormDto editFormDto) {
+        memberService.update(memberId, editFormDto);
+        return "redirect:/";
     }
 }

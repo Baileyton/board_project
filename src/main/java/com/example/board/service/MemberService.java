@@ -57,4 +57,8 @@ public class MemberService {
     public EditFormDto editForm(Member loginMember) {
         return new EditFormDto(loginMember.getNick());
     }
+
+    public void update(Long memberId, EditFormDto editFormDto){
+        memberRepository.update(memberId, editFormDto.getNick());
+    }
 }
