@@ -4,11 +4,11 @@ import com.example.board.dto.EditFormDto;
 import com.example.board.dto.JoinFormDto;
 import com.example.board.dto.LoginFormDto;
 import com.example.board.entity.Member;
+import com.example.board.security.PasswordEncoder;
 import com.example.board.service.MemberService;
 import com.example.board.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -65,7 +65,7 @@ public class MemberController {
             return "member/joinForm";
         }
 
-        return "board";
+        return "redirect:/login";
     }
 
     //로그인 화면

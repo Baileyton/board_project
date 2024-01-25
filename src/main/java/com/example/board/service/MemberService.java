@@ -3,8 +3,8 @@ package com.example.board.service;
 import com.example.board.dto.EditFormDto;
 import com.example.board.entity.Member;
 import com.example.board.repository.MemberRepository;
+import com.example.board.security.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
