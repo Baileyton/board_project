@@ -11,9 +11,4 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Member findByNick(String nick);
 
-    @Modifying
-    @Transactional
-    @Query("UPDATE Member m set m.nick = :nick WHERE m.id = :memberId")
-    void update(@Param("memberId") Long memberId, @Param("nick") String nick);
-
 }

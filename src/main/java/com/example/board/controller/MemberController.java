@@ -131,8 +131,9 @@ public class MemberController {
     }
 
     @PostMapping(value = "/info/{memberId}/edit")
-    public String memberEdit(@PathVariable Long memberId, EditFormDto editFormDto) {
+    public String memberEdit(@PathVariable Long memberId, EditFormDto editFormDto, RedirectAttributes redirectAttributes) {
         memberService.update(memberId, editFormDto);
-        return "redirect:/";
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/info/" + memberId;
     }
 }

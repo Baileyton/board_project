@@ -59,6 +59,14 @@ public class MemberService {
     }
 
     public void update(Long memberId, EditFormDto editFormDto){
-        memberRepository.update(memberId, editFormDto.getNick());
+        Optional<Member> existingMember = memberRepository.findById(memberId);
+
+        if(existingMember.isPresent()) {
+            Member memberIdUpdate = existingMember.get();
+            memberIdUpdate.setNick(editFormDto.getNick());
+            memberRepository.save(memberIdUpdate);
+        }else {
+            throw new RuntimeException("Member not found with id: " + memberId);
+        }
     }
 }

@@ -9,8 +9,8 @@
     <div>
         <h1>회원 정보</h1>
     </div>
-    <!-- 추가 -->
-    <h5>수정 완료</h5>
+
+    <h5 th:if="${param.status}">수정 완료</h5>
 
     <div>
         <label for="nick" >닉네임</label>
