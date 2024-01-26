@@ -96,7 +96,7 @@ public class PostController {
         }
 
         postService.update(postId, postFormDto);
-        return "redirect:post/{postId}";
+        return "redirect:/post/" + postId;
     }
 
     @GetMapping(value = "/post/{postId}/delete")

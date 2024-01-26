@@ -17,7 +17,7 @@
 
     <hr>
 
-    <form th:action="@{/post/{postId}/edit(postId=${post.id})}" th:object="${postFormDto}" method="post">
+    <form th:action="@{'/post/' + ${post.id} + '/edit'}" th:object="${postFormDto}" method="post">
         <!-- 제목, 내용 -->
         <div>
             <label for="title">제목</label>
