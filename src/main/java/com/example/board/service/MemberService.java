@@ -1,6 +1,7 @@
 package com.example.board.service;
 
 import com.example.board.dto.EditFormDto;
+import com.example.board.dto.PasswordEditFormDto;
 import com.example.board.entity.Member;
 import com.example.board.repository.MemberRepository;
 import com.example.board.security.PasswordEncoder;
@@ -68,5 +69,23 @@ public class MemberService {
         }else {
             throw new RuntimeException("Member not found with id: " + memberId);
         }
+    }
+
+    public void editPassword(Long memberId, PasswordEditFormDto formDto){
+        Optional<Member> existingMember = memberRepository.findById(memberId);
+
+        if(existingMember.isPresent()) {
+            Member passwordUpdate = existingMember.get();
+            String editPassword = passwordEncoder.encode(formDto.getEditPassword());
+            passwordUpdate.setPassword(editPassword);
+            memberRepository.save(passwordUpdate);
+        }else {
+            throw new RuntimeException("Member not found with id: " + memberId);
+        }
+
+    }
+
+    public boolean isPasswordCheckCoincide(String password, String passwordCheck){
+        return password.equals(passwordCheck);
     }
 }

@@ -3,6 +3,7 @@ package com.example.board.controller;
 import com.example.board.dto.EditFormDto;
 import com.example.board.dto.JoinFormDto;
 import com.example.board.dto.LoginFormDto;
+import com.example.board.dto.PasswordEditFormDto;
 import com.example.board.entity.Member;
 import com.example.board.security.PasswordEncoder;
 import com.example.board.service.MemberService;
@@ -12,10 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -135,5 +134,35 @@ public class MemberController {
         memberService.update(memberId, editFormDto);
         redirectAttributes.addAttribute("status", true);
         return "redirect:/info/" + memberId;
+    }
+
+    @GetMapping(value = "/info/{nick}/editpassword")
+    public String editPasswordForm(@PathVariable String nick, Model model){
+        model.addAttribute("form", new PasswordEditFormDto());
+        return "member/editPasswordForm";
+    }
+
+    @PostMapping(value = "/info/{nick}/editpassword")
+    public String editPassword(@PathVariable String nick, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                               @Validated @ModelAttribute("form") PasswordEditFormDto form, BindingResult bindingResult){
+        log.info("currentPW=[{}] , edit : [{}]", form.getCurrentPassword(),form);
+        loginMember = memberService.findById(loginMember.getId()).get();
+        if(!passwordEncoder.matches(form.getCurrentPassword(), loginMember.getPassword())){
+            log.info("현재 비밀번호 오류" );
+        }
+
+        if(!memberService.isPasswordCheckCoincide(form.getEditPassword(),form.getEditPasswordCheck())) {
+            log.info("비밀번호 일치 오류");
+            bindingResult.reject("notCoincidePassword", "두 비밀번호가 일치하지 않습니다.");
+        }
+
+        if(bindingResult.hasErrors()){
+            log.info("필드 에러 발생 ");
+            return "member/editPasswordForm";
+        }
+
+        memberService.editPassword(loginMember.getId(), form);
+
+        return "redirect:/info";
     }
 }
