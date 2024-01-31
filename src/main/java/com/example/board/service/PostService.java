@@ -8,9 +8,7 @@ import com.example.board.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +25,17 @@ public class PostService {
     }
 
     public List<Post> findAll() {
-        return postRepository.findAll();
+        return sortByLatest(postRepository.findAll());
+    }
+
+    public List<Post> sortByLatest(List<Post> list){
+        Collections.sort(list, new Comparator<Post>() {
+            @Override
+            public int compare(Post o1, Post o2) {
+                return (int)(o2.getId()-o1.getId());
+            }
+        });
+        return list;
     }
 
     public void addView(Long postId){

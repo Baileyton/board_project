@@ -11,10 +11,11 @@ Java 11, Spring Boot 2.7.16, Spring Data JPA, Thymeleaf, HTML5, CSS3, MariaDB, I
 
 ### 회원 Member
 - 회원 CRUD 구현 (회원가입, 회원 정보 수정)
-  - 회원가입, 로그인 PasswordEncoder SHA-256 해시 함수 사용
+  - 회원가입, 로그인 회원, 정보 수정 PasswordEncoder SHA-256 해시 함수 사용
 
 
 ### 게시글 Post
+게시글 정렬
 - 게시글 CRUD 구현 (게시글 작성, 수정, 삭제)
 - 로그인 사용자 확인 후 작성글 수정, 삭제
 - 조회수 기능: 작성자가 조회시 조회수 증가 안될 것
