@@ -43,4 +43,16 @@ public class BoardController {
             return true;
         }
     }
+
+    @GetMapping(value = "/testjoin")
+    public String testJoinPage(Model model) {
+        model.addAttribute("title", "");
+        return "member/testJoin";
+    }
+
+    @GetMapping(value = "/testlogin")
+    public String testLoginPage(Model model) {
+        model.addAttribute("title", "");
+        return "member/testLogin";
+    }
 }
