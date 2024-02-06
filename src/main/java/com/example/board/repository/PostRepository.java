@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
@@ -21,4 +22,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Transactional
     @Query("DELETE FROM Post p WHERE p.id = :postId")
     void deletePost(Long postId);
+
+    List<Post> findByWriterContaining(String keyword);
+    List<Post> findByContentContaining(String keyword);
 }

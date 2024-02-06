@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -105,5 +106,14 @@ public class PostController {
         postService.deletePost(postId);// 후 게시글 삭제
 
         return "redirect:/";
+    }
+
+    @GetMapping(value = "/search")
+    public String search(@RequestParam String searchType, @RequestParam String keyword, Model model) {
+        List<Post> searchResults;
+        searchResults = postService.searchPosts(searchType, keyword);
+
+        model.addAttribute("searchResults", searchResults);
+        return "post/postSearch";
     }
 }

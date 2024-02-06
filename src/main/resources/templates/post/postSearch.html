@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h2>검색 결과</h2>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th style="width: 100px; text-align: center">번호</th>
+            <th style="width: 500px; text-align: center">제목</th>
+            <th style="width: 150px; text-align: center">작성자</th>
+            <th style="width: 150px; text-align: center">등록일</th>
+            <th style="width: 100px; text-align: center">조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="post : ${searchResults}">
+            <td th:text="${post.id}" style="width: 100px; text-align: center">1234</td>
+            <td style="width: 500px; text-align: center">
+                <a th:href="@{/post/{postId}(postId=${post.id})}">
+                    <th:block th:text="${#strings.length(post.title) &gt; 30 ? #strings.substring(post.title, 0, 30) + '...' : post.title}">
+                        title-example
+                    </th:block>
+                </a>
+            </td>
+            <td th:text="${post.writer}" style="width: 150px; text-align: center">nick</td>
+            <td th:text="${post.createDate.plusDays(1) &lt; #temporals.createNow() ? #temporals.format(post.createDate, 'yyyy-MM-dd') : #temporals.format(post.createDate, 'HH:mm')}" style="width: 150px; text-align: center">
+                &lt;!&ndash; create_date가 현재시간으로부터 하루 이전이면 날짜를, 하루 이내면 시간을 표시 &ndash;&gt;
+            </td>
+
+            <td th:text="${post.views}" style="width: 100px; text-align: center">23</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
