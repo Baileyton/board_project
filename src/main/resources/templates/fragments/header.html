@@ -1,9 +1,49 @@
 <!DOCTYPE html>
-<!-- Thymeleaf 선언 / headerFragment 임을 선언-->
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      th:fragment="HeaderFragment">
-<div style="border: solid 1px yellow">
-    <h1>Header 영역</h1>
-</div>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="header">
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <style>
+        a{
+            text-decoration-line: none;
+            color: black;
+        }
+
+        .userInfo{
+            display: flex;
+            justify-content: flex-end;
+        }
+    </style>
+</head>
+<!-- 로그인, 회원 정보 관련  -->
+<div>
+    <!-- 로그인 시  -->
+    <div class="userInfo" th:if="${show}">
+        <a th:text="${member.nick + ' 님 반갑습니다.'}">(회원아이디)</a>
+        <span>님 반갑습니다.</span>
+        <button th:onclick="|location.href='@{/info}'|"
+                type="button">회원 프로필</button>
+
+        <form th:action="@{/logout}" method="post"
+              onsubmit="return confirm('로그아웃 하시겠습니까?');">
+            <button type="submit">
+                로그아웃
+            </button>
+        </form>
+    </div><!-- /로그인, 회원 정보 관련  -->
+
+    <!-- 로그아웃 상태  -->
+    <div class="userInfo" th:unless="${show}">
+        <button onclick="location.href='joinForm.html'"
+                th:onclick="|location.href='@{/join}'|"
+                type="button">
+            회원가입
+        </button>
+        <button onclick="location.href='loginForm.html'"
+                th:onclick="|location.href='@{/login}'|"
+                type="button">
+            로그인
+        </button>
+    </div>
+</div><!-- /로그아웃 상태  -->
 </html>

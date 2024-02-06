@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html lang="" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+      layout:fragment="content"
+>
 <head>
     <title>Board Project</title>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
@@ -8,61 +13,26 @@
             text-decoration-line: none;
             color: black;
         }
-
-        .userInfo{
-            display: flex;
-            justify-content: flex-end;
+        .container{
+            max-width: 1000px;
+            text-align: center;
+            margin: auto;
         }
     </style>
 </head>
 <body>
-<div>
-    <!-- 로그인, 회원 정보 관련  -->
-    <div class="py-1 row">
-        <!-- 로그인 시  -->
-        <div class="userInfo" th:if="${show}">
-            <a th:text="${member.nick + ' 님 반갑습니다.'}">(회원아이디)</a>
-            <span>님 반갑습니다.</span>
-            <button th:onclick="|location.href='@{/info}'|"
-                    type="button">회원 프로필</button>
-
-            <form th:action="@{/logout}" method="post"
-                  onsubmit="return confirm('로그아웃 하시겠습니까?');">
-                <button type="submit">
-                    로그아웃
-                </button>
-            </form>
-        </div><!-- /로그인, 회원 정보 관련  -->
-
-        <!-- 로그아웃 상태  -->
-        <div class="userInfo" th:unless="${show}">
-            <button onclick="location.href='joinForm.html'"
-                    th:onclick="|location.href='@{/join}'|"
-                    type="button">
-                회원가입
-            </button>
-            <button onclick="location.href='loginForm.html'"
-                    th:onclick="|location.href='@{/login}'|"
-                    type="button">
-                로그인
-            </button>
-        </div>
-    </div><!-- /로그아웃 상태  -->
-    <hr>
-
+<div class="container">
     <!-- 검색 -->
-    <div>
+    <div style="display: flex; justify-content: space-between">
         <div>
-            <form>
-                <select>
-                    <option>Option</option>
+            <form action="/search" method="get">
+                <select name="searchType">
+                    <option value="writer">작성자</option>
+                    <option value="content">내용</option>
                 </select>
 
-                <input type="text" placeholder="작성자 입력">
+                <input type="text" name="keyword" placeholder="검색어 입력">
                 <button type="submit">검색</button>
-                <span>
-                    <span>글로벌 오류 메시지</span>
-                </span>
             </form>
         </div>
 
@@ -81,11 +51,11 @@
         <table>
             <thead>
             <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>등록일</th>
-                <th>조회수</th>
+                <th style="width: 100px; text-align: center">번호</th>
+                <th style="width: 500px; text-align: center">제목</th>
+                <th style="width: 150px; text-align: center">작성자</th>
+                <th style="width: 150px; text-align: center">등록일</th>
+                <th style="width: 100px; text-align: center">조회수</th>
             </tr>
             </thead>
             <tbody>

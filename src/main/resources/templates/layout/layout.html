@@ -5,18 +5,15 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <!--공통 JS / CSS 영역을 관리하는 환경 영역-->
-<head th:replace="fragments/config :: ConfigFragment">
-    <title layout:title-pattern="$LAYOUT_TITLE : $CONTENT_TITLE">공통 타이틀</title>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-<!--Header 영역을 참조합니다.-->
-<header th:replace="fragments/header :: HeaderFragment"></header>
-
-<!--Content 내용 영역을 참조합니다-->
-<th:block layout:fragment="Content"></th:block>
-
-<!--Footer 영역을 참조합니다.-->
-<footer th:replace="fragments/footer :: FooterFragment"></footer>
+<header th:replace="~{fragments/header :: header}"></header>
+<th:block layout:fragment="content"></th:block>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>
