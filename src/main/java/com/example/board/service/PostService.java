@@ -90,9 +90,9 @@ public class PostService {
 
     public List<Post> searchPosts(String searchType, String keyword) {
         if ("writer".equals(searchType)) {
-            return postRepository.findByWriterContaining(keyword);
+            return sortByLatest(postRepository.findByWriterContaining(keyword));
         } else if ("content".equals(searchType)) {
-            return postRepository.findByContentContaining(keyword);
+            return sortByLatest(postRepository.findByContentContaining(keyword));
         } else {
             return new ArrayList<>();
         }
