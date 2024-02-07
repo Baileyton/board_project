@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html lang="" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+      layout:fragment="content"
+>
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <title>로그인</title>
@@ -12,9 +17,6 @@
             margin-top: 100px;
             font-size: 16px;
             color: #999;
-            border: 1px solid #216182;
-            border-radius: 20px;
-            padding: 20px 50px 70px 50px;
         }
 
         h1{

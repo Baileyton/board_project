@@ -1,11 +1,23 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+      layout:fragment="content"
+>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .container{
+            max-width: 1000px;
+            text-align: center;
+            margin: auto;
+        }
+    </style>
 </head>
 <body>
-<div>
+<div class="container">
     <div>
         <h1>회원 정보</h1>
     </div>

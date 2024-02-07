@@ -4,6 +4,12 @@
     <title></title>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <style>
+        .container{
+            max-width: 1000px;
+            text-align: center;
+            margin: auto;
+        }
+
         a{
             text-decoration-line: none;
             color: black;
@@ -16,7 +22,7 @@
     </style>
 </head>
 <!-- 로그인, 회원 정보 관련  -->
-<div>
+<div class="container">
     <!-- 로그인 시  -->
     <div class="userInfo" th:if="${show}">
         <a th:text="${member.nick + ' 님 반갑습니다.'}">(회원아이디)</a>

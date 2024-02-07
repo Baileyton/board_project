@@ -1,16 +1,17 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+      layout:fragment="content"
+>
 <head>
     <meta charset="utf-8">
     <style>
-        .field-error{
-            border-color: red;
-            color: red;
-        }
     </style>
 </head>
 <body>
-<div>
+<div class="container">
     <div>
         <h1>게시글 작성 하기</h1>
     </div>

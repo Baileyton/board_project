@@ -109,11 +109,22 @@ public class PostController {
     }
 
     @GetMapping(value = "/search")
-    public String search(@RequestParam String searchType, @RequestParam String keyword, Model model) {
+    public String search(@RequestParam String searchType, @RequestParam String keyword, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)Member loginMember, Model model) {
+        model.addAttribute("show", isLoggedin(loginMember, model));
         List<Post> searchResults;
         searchResults = postService.searchPosts(searchType, keyword);
 
         model.addAttribute("searchResults", searchResults);
         return "post/postSearch";
+    }
+
+    private boolean isLoggedin(Member loginMember, Model model) {
+        if(loginMember == null) {
+            return false;
+        }
+        else {
+            model.addAttribute("member", memberService.findById(loginMember.getId()).get());
+            return true;
+        }
     }
 }
