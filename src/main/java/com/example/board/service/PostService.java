@@ -6,6 +6,9 @@ import com.example.board.entity.Member;
 import com.example.board.entity.Post;
 import com.example.board.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -24,8 +27,9 @@ public class PostService {
         return postRepository.findById(id).get();
     }
 
-    public List<Post> findAll() {
-        return sortByLatest(postRepository.findAll());
+    public Page<Post> findAll(int page, int size) {
+        PageRequest pageable = PageRequest.of(page, size, Sort.by("id").descending());
+        return postRepository.findAll(pageable);
     }
 
     public List<Post> sortByLatest(List<Post> list){
@@ -65,7 +69,7 @@ public class PostService {
     }
 
     public String getHtmlContent(String content) {
-        return content.replaceAll("\n", "<br>");
+        return content;
     }
 
     public PostFormDto getEditForm(Post post) {
