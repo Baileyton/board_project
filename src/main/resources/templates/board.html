@@ -18,10 +18,51 @@
             text-align: center;
             margin: auto;
         }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        .userInfo{
+            display: flex;
+            justify-content: flex-end;
+        }
     </style>
 </head>
 <body>
 <div class="container">
+    <!-- 로그인, 회원 정보 관련  -->
+    <div class="container">
+        <!-- 로그인 시  -->
+        <div class="userInfo" th:if="${show}">
+            <a th:text="${member.nick + ' 님 반갑습니다.'}">(회원아이디)</a>
+            <span>님 반갑습니다.</span>
+            <button th:onclick="|location.href='@{/info}'|"
+                    type="button">회원 프로필</button>
+
+            <form th:action="@{/logout}" method="post"
+                  onsubmit="return confirm('로그아웃 하시겠습니까?');">
+                <button type="submit">
+                    로그아웃
+                </button>
+            </form>
+        </div><!-- /로그인, 회원 정보 관련  -->
+
+        <!-- 로그아웃 상태  -->
+        <div class="userInfo" th:unless="${show}">
+            <button onclick="location.href='joinForm.html'"
+                    th:onclick="|location.href='@{/join}'|"
+                    type="button">
+                회원가입
+            </button>
+            <button onclick="location.href='loginForm.html'"
+                    th:onclick="|location.href='@{/login}'|"
+                    type="button">
+                로그인
+            </button>
+        </div>
+    </div><!-- /로그아웃 상태  -->
+
     <!-- 검색 -->
     <div style="display: flex; justify-content: space-between">
         <div>
@@ -77,6 +118,14 @@
             </tr>
             </tbody>
         </table>
+    </div>
+    <!-- 페이지 네비게이션 -->
+    <div>
+        <ul class="pagination">
+            <li th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}">
+                <a th:href="@{'/?page=' + ${pageNumber}}" th:text="${pageNumber + 1}"></a>
+            </li>
+        </ul>
     </div>
 </div>
 </body>

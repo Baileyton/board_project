@@ -7,9 +7,12 @@ import com.example.board.service.PostService;
 import com.example.board.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.util.List;
@@ -24,12 +27,15 @@ public class BoardController {
     private final PostService postService;
 
     @GetMapping(value = "/")
-    public String boardPage(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)Member loginMember, Model model) {
+    public String boardPage(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)Member loginMember,
+                            @RequestParam(defaultValue = "0") int page, Model model) {
         model.addAttribute("show", isLoggedin(loginMember, model));
 
-        List<Post> posts = postService.findAll();
+        Page<Post> postsPage = postService.findAll(page, 10); // 한 페이지에 10개의 게시글
 
-        model.addAttribute("posts", posts);
+        model.addAttribute("posts", postsPage.getContent()); // 현재 페이지의 게시글 목록
+        model.addAttribute("currentPage", page); // 현재 페이지 번호
+        model.addAttribute("totalPages", postsPage.getTotalPages()); // 총 페이지 수
 
         return "board";
     }
@@ -44,15 +50,4 @@ public class BoardController {
         }
     }
 
-    @GetMapping(value = "/testjoin")
-    public String testJoinPage(Model model) {
-        model.addAttribute("title", "");
-        return "member/testJoin";
-    }
-
-    @GetMapping(value = "/testlogin")
-    public String testLoginPage(Model model) {
-        model.addAttribute("title", "");
-        return "member/testLogin";
-    }
 }
