@@ -4,52 +4,27 @@
     <title></title>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <style>
-        .container{
+        body{
+            margin: 0;
+        }
+        .headerContainer {
+            display: flex;
+            justify-content: space-between; /* 오른쪽 정렬 */
+            align-items: center; /* 수직 가운데 정렬 */
+            height: 50px; /* 높이 조절 */
+            background-color: whitesmoke; /* 배경색 설정 */
+            color: white; /* 텍스트 색상 설정 */
             max-width: 1000px;
-            text-align: center;
             margin: auto;
         }
-
         a{
-            text-decoration-line: none;
             color: black;
-        }
-
-        .userInfo{
-            display: flex;
-            justify-content: flex-end;
+            text-decoration: none; /* 밑줄 제거 */
+            padding: 20px;
         }
     </style>
 </head>
-<!-- 로그인, 회원 정보 관련  -->
-<div class="container">
-    <!-- 로그인 시  -->
-    <div class="userInfo" th:if="${show}">
-        <a th:text="${member.nick + ' 님 반갑습니다.'}">(회원아이디)</a>
-        <span>님 반갑습니다.</span>
-        <button th:onclick="|location.href='@{/info}'|"
-                type="button">회원 프로필</button>
-
-        <form th:action="@{/logout}" method="post"
-              onsubmit="return confirm('로그아웃 하시겠습니까?');">
-            <button type="submit">
-                로그아웃
-            </button>
-        </form>
-    </div><!-- /로그인, 회원 정보 관련  -->
-
-    <!-- 로그아웃 상태  -->
-    <div class="userInfo" th:unless="${show}">
-        <button onclick="location.href='joinForm.html'"
-                th:onclick="|location.href='@{/join}'|"
-                type="button">
-            회원가입
-        </button>
-        <button onclick="location.href='loginForm.html'"
-                th:onclick="|location.href='@{/login}'|"
-                type="button">
-            로그인
-        </button>
-    </div>
-</div><!-- /로그아웃 상태  -->
+<div class="headerContainer">
+    <a href="/">Board</a>
+</div>
 </html>

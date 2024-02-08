@@ -28,8 +28,6 @@ public class PostController {
 
     private final CommentService commentService;
 
-    private final MemberService memberService;
-
     @GetMapping(value = "/write")
     public String writePage(Model model) {
         model.addAttribute("postFormDto", new PostFormDto());
@@ -38,36 +36,45 @@ public class PostController {
 
     @PostMapping(value = "/write")
     public String write(@Valid PostFormDto postFormDto, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) {
-            return "post/writeForm";
+        try {
+            if (bindingResult.hasErrors()) {
+                return "post/writeForm";
+            }
+
+            Post post = new Post(loginMember.getNick(), postFormDto.getTitle(), postFormDto.getContent());
+            Post savedPost = postService.save(post);
+
+            redirectAttributes.addAttribute("postId",savedPost.getId());
+            return "redirect:/post/{postId}";
+        } catch (NullPointerException e) {
+            return "redirect:/login";
         }
-
-        Post post = new Post(loginMember.getNick(), postFormDto.getTitle(), postFormDto.getContent());
-        Post savedPost = postService.save(post);
-
-        redirectAttributes.addAttribute("postId",savedPost.getId());
-        return "redirect:/post/{postId}";
     }
 
     @GetMapping(value = "/post/{postId}")
     public String postIdPage(@PathVariable long postId, Model model,
                              @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember){
-        Post post = postService.findById(postId);
+        try {
+            Post post = postService.findById(postId);
 
-        if(postService.isAccessable(postId, loginMember)){
-            model.addAttribute("access",true);
-        }else {
-            postService.addView(postId); // 조회수
+            if (postService.isAccessable(postId, loginMember)) {
+                model.addAttribute("access", true);
+            } else {
+                postService.addView(postId); // 조회수
+            }
+
+            List<Comment> comments = commentService.findByPostId(postId);
+            model.addAttribute("comments", comments);
+            PostHtmlDto postHtmlDto = postService.getHtmlPostDto(post);
+            model.addAttribute("post", postHtmlDto);
+
+            model.addAttribute("commentForm", new Comment());
+
+            return "post/postDetail";
+        } catch (NullPointerException e) {
+            return "redirect:/login";
         }
 
-        List<Comment> comments = commentService.findByPostId(postId);
-        model.addAttribute("comments", comments);
-        PostHtmlDto postHtmlDto = postService.getHtmlPostDto(post);
-        model.addAttribute("post", postHtmlDto);
-
-        model.addAttribute("commentForm", new Comment());
-
-        return "post/postDetail";
     }
 
     @PostMapping(value = "/post/{postId}")
@@ -81,12 +88,16 @@ public class PostController {
     }
 
     @GetMapping(value = "/post/{postId}/edit")
-    public String editForm(@PathVariable long postId, Model model) {
-        Post post = postService.findById(postId);
+    public String editForm(@PathVariable long postId,@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
+        try{
+            Post post = postService.findById(postId);
 
-        model.addAttribute("post", post);
-        model.addAttribute("postFormDto", postService.getEditForm(post));
-        return "post/editForm";
+            model.addAttribute("post", post);
+            model.addAttribute("postFormDto", postService.getEditForm(post));
+            return "post/editForm";
+        } catch (NullPointerException e) {
+            return "redirect:/login";
+        }
     }
 
     @PostMapping(value = "/post/{postId}/edit")
@@ -109,8 +120,7 @@ public class PostController {
     }
 
     @GetMapping(value = "/search")
-    public String search(@RequestParam String searchType, @RequestParam String keyword, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)Member loginMember, Model model) {
-        model.addAttribute("show", isLoggedin(loginMember, model));
+    public String search(@RequestParam String searchType, @RequestParam String keyword, Model model) {
         List<Post> searchResults;
         searchResults = postService.searchPosts(searchType, keyword);
 
@@ -118,13 +128,4 @@ public class PostController {
         return "post/postSearch";
     }
 
-    private boolean isLoggedin(Member loginMember, Model model) {
-        if(loginMember == null) {
-            return false;
-        }
-        else {
-            model.addAttribute("member", memberService.findById(loginMember.getId()).get());
-            return true;
-        }
-    }
 }

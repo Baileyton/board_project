@@ -14,6 +14,44 @@
             text-align: center;
             margin: auto;
         }
+
+        .comment-section {
+            max-width: 1000px;
+            margin: auto;
+            background-color: #f3f3f3;
+        }
+
+        .comment-section .comment {
+            background-color: #fff;
+        }
+
+        .comment-write{
+            padding: 12px 16px 20px;
+            background-color: #fcfcfc;
+            border: 1px solid #ddd;
+            border-bottom-color: #ccc;
+            border-radius: 8px;
+        }
+
+        .comment-section .comment h5 {
+            font-weight: bold;
+        }
+
+        .comment-section .comment-textarea {
+            width: 100%;
+            border: none;
+            margin-top: 10px;
+        }
+
+        .comment-section .submit-btn {
+            background-color: #216182;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -52,24 +90,28 @@
 </div><!-- /container -->
 <br>
 <!-- 댓글 컨테이너 -->
-<div>
-    <!-- 댓글 작성 폼 -->
-    <form th:accept th:object="${commentForm}" method="post">
-        <div>
-            <textarea type="text" id="text"
-                      th:field="*{comment}"
-                      placeholder="댓글 작성" >
-            </textarea>
-            <button type="submit">작성</button>
-        </div>
-    </form>
+<div class="comment-section">
 
     <!-- 댓글 리스트 -->
     <div th:each="comment : ${comments}">
         <p th:text="|${comment.nick}   (${#temporals.format(comment.modifiedDate, 'yyyy-MM-dd HH:mm')})|">작성자</p>
-        <p th:text="${comment.comment}">댓글 내용이 이곳에 표시됩니다.</p>
+        <pre th:text="${comment.comment}">댓글 내용이 이곳에 표시됩니다.</pre>
+        <hr>
     </div>
-    <hr>
+    <!-- 댓글 작성 폼 -->
+    <form th:accept th:object="${commentForm}" method="post">
+        <div class="comment-write">
+            <h5>댓글 쓰기</h5>
+            <textarea type="text" id="text"
+                      class="comment-textarea"
+                      th:field="*{comment}"
+                      rows="3"
+                      placeholder="댓글 작성" >
+            </textarea>
+            <button class="submit-btn" type="submit">댓글 작성</button>
+        </div>
+    </form>
+
 </div>
 
 </body>
